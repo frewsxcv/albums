@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Goudy+Bookletter+1911' rel='stylesheet' type='text/css'>
+      <style>
+         body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+         }
+
+         #background {
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: -10;
+         }
+
+         #albums {
+            margin-left: -50px;
+            margin-right: -50px;
+            text-align: center;
+         }
+
+         .album {
+            display: inline-block;
+            height: 100px;
+            width: 100px;
+            position: relative;
+            vertical-align: bottom;
+         }
+
+         .album > .fade {
+            background-color: black;
+            opacity: 0.8;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 6;
+         }
+
+         .artwork {
+            height: 100px;
+            width: 100px;
+            margin: 0px;
+            top: 0;
+            left: 0;
+            z-index: 7;
+            cursor: pointer;
+         }
+
+         #details {
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            height: 90px;
+            width: 190px;
+            padding: 5px 5px 5px 105px;
+            position: absolute;
+            display: hidden;
+            z-index: 8;
+            background-color: white;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+         }
+
+         #wrapper {
+            width: 500px;
+            margin: 0 auto;
+         }
+      </style>
+   </head>
+   <body>
+      <div id="background">
+         <div id="albums"></div>
+         <div id="details">
+            <span id="details-name"></span>
+            <span id="details-artist"></span>
+         </div>
+      </div>
+
+      <script src="jquery-1.8.3.min.js"></script>
+      <script src="plugin.js"></script>
+      <script src="quantize.js"></script>
+      <script src="color-thief.js"></script>
+      <script src="myAlbums.js"></script>
+      <script src="albums.js"></script>
+   </body>
+</html>
