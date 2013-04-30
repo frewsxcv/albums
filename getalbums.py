@@ -23,33 +23,39 @@ def top_albums(num=100, user=USER, api_key=API_KEY):
     return top_albums
 
 
-def save_album():
-    pass
-
-
-top = top_albums(150)
-
-
-albums = []
-img_num = 1
-
-for album in top:
+def save_album_art(album):
     if album.image["large"] != NOIMAGE:
-        img_src = album.image["large"]
-        file_ext = img_src.split(".")[-1]
-        filename = "{}.{}".format(str(album.id), file_ext)
-        path = os.path.join(IMG_DIR, filename)
-        print path
-        with open(path, "w") as img_file:
-            img_file.write(urlopen(img_src).read())
-        albums.append({
+        try:
+            album_id, img_src = str(album.id), album.image["large"]
+            file_ext = img_src.split(".")[-1]
+            filename = "{}.{}".format(album_id, file_ext)
+            path = os.path.join(IMG_DIR, filename)
+            with open(path, "w") as img_file:
+                img_file.write(urlopen(img_src).read())
+            return path
+        except lastfm.error.OperationFailedError:
+            return None
+    else:
+        return None
+
+
+top_albums = top_albums(150)
+saved_albums = []
+
+for album in top_albums:
+    path = save_album_art(album)
+    if path != None:
+        print album.name.encode("utf8")
+        saved_albums.append({
             "image": path,
             "artist": album.artist.name,
             "name": album.name
         })
+    else:
+        print "Failed: {}".format(album.name)
 
-random.shuffle(albums)  # SHOULD RANDOMIZE ON THE CLIENT SIDE
+random.shuffle(saved_albums)  # SHOULD RANDOMIZE ON THE CLIENT SIDE
 
 with open("myAlbums.js", "w") as my_albums:
     my_albums.write("var albums = ")
-    my_albums.write(json.dumps(albums))
+    my_albums.write(json.dumps(saved_albums))
